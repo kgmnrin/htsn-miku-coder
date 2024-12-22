@@ -1,0 +1,86 @@
+{
+	"name": "htsn-miku-coder",
+	"displayName": "Hatsune Miku Coder",
+	"description": "",
+	"publisher": "東雲絵名",
+	"icon": "res/icon.png",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.96.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onStartupFinished"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Hatsune Miku Coder Settings",
+			"properties": {
+				"htsn-miku-coder.ollama.host": {
+					"type": "string",
+					"default": "http://localhost:11434"
+				},
+				"htsn-miku-coder.ollama.model": {
+					"type": "string",
+					"default": "llama3.2:3b"
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "htsn-miku-coder.applyGitFormatSuggest",
+				"title": "Code"
+			},
+			{
+				"command": "htsn-miku-coder.applyMarkdownFormatChat",
+				"title": "Chat"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "htsn-miku-coder.applyGitFormatSuggest",
+				"key": "ctrl+shift+alt+s",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "htsn-miku-coder.applyMarkdownFormatChat",
+				"key": "ctrl+shift+alt+c",
+				"when": "editorTextFocus"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "npm run check-types && npm run lint && node esbuild.js",
+		"watch": "npm-run-all -p watch:*",
+		"watch:esbuild": "node esbuild.js --watch",
+		"watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+		"package": "npm run check-types && npm run lint && node esbuild.js --production",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"check-types": "tsc --noEmit",
+		"lint": "eslint src",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^10.0.9",
+		"@types/node": "20.x",
+		"@types/vscode": "^1.96.0",
+		"@typescript-eslint/eslint-plugin": "^8.10.0",
+		"@typescript-eslint/parser": "^8.7.0",
+		"@vscode/test-cli": "^0.0.10",
+		"@vscode/test-electron": "^2.4.1",
+		"esbuild": "^0.24.0",
+		"eslint": "^9.13.0",
+		"npm-run-all": "^4.1.5",
+		"typescript": "^5.6.3"
+	},
+	"dependencies": {
+		"ollama": "^0.5.11"
+	}
+}
